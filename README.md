@@ -4,15 +4,7 @@ SOFTABLITZ
  
 
 TEAM: JAVA DALIA
-Team members:
 
-1.	Name: Khushi Agarwal
-Reg no. : 20194041
-Contact: 9830808226
-2.	Name: Anshu Kumari
-Reg no. :20190036
-3.	Name: Kashish Agarwal
-Reg no. : 20194034
 FOOD PILE 
 Abs are temporary , food is forever !!!!!
 
