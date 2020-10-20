@@ -262,7 +262,7 @@ public class Registration extends javax.swing.JFrame {
             ps.setString(1, fname);
             ps.setString(2, lname);
             ps.setString(3, user);
-            ps.setString(4, password);
+            ps.setString(4, pass);
             ps.setString(5, email);
             ps.setString(6, contact);
             
@@ -286,7 +286,9 @@ public class Registration extends javax.swing.JFrame {
             else
             {
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Registration successful");}
+            JOptionPane.showMessageDialog(null,"Registration successful");
+            new Details(user).setVisible(true);
+            dispose();}
             
         }
         catch(Exception e)
@@ -302,6 +304,7 @@ public class Registration extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        dispose();
         new Login().setVisible(true);
         
         

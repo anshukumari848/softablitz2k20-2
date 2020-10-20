@@ -149,19 +149,24 @@ public class Login extends javax.swing.JFrame {
             String uname="root";
             String password="webster";
             con=DriverManager.getConnection(url,uname,password);
-            
+           
             String query="SELECT * FROM register WHERE user=? and password=?";
             ps=con.prepareStatement(query);
+            String user = txt_user.getText();
             ps.setString(1,txt_user.getText());
             ps.setString(2,txt_password.getText());
             rs=ps.executeQuery();
             if(!rs.next())
             {
                 JOptionPane.showMessageDialog(null,"Incorrect username or password");
+                
+        
             }
             else
             {
-                JOptionPane.showMessageDialog(null,"Username and password mached");
+                JOptionPane.showMessageDialog(null,"Username and password matched");
+                new Details(user).setVisible(true);
+                dispose();
             }
         }
         catch(Exception e)
@@ -178,6 +183,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         new Registration().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
