@@ -2,22 +2,22 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
-package registration_and_login;
 
+
+/**
+ *
+ * @author This Pc
+ */
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
 
-/**
- *
- * @author hp
- */
+import net.proteanit.sql.DbUtils;
+
 
 public class Sort extends javax.swing.JFrame {
      Connection con=null;
@@ -30,33 +30,9 @@ public class Sort extends javax.swing.JFrame {
     public Sort(String user) {
         initComponents();
         this.user=user;
-        showUsersInJTable(query);
+        showRecord();
     }
-  
-    }
-    //funtion to display the result in jtable
-    public void showUsersInJTable(String Query){
-        
-      ArrayList<Product> users=ListUsers(Query);
-     DefaultTableModel model=new DefaultTableModel();
-      model.setColumnIdentifiers(new Object[]{"Id", "Product name", "Price", "Quantity", "Category", "Mfg. Date", "Expiry Date"
-            });
-          Object[] row=new Object[7];
-          for(int i=0;i<users.size();i++){
-              row[0]=users.get(i).getId();
-              row[1]=users.get(i).getPname();
-              row[2]=users.get(i).getPrice();
-              row[3]=users.get(i).getQuantity();
-              row[4]=users.get(i).getCategory();
-              row[5]=users.get(i).getMfgDate();
-              row[6]=users.get(i).getExpDate();
-              
-              model.addRow(row);
-          }
-          
-          Sort.setModel(model);
-    }
-        
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,7 +47,6 @@ public class Sort extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
@@ -106,28 +81,21 @@ public class Sort extends javax.swing.JFrame {
         });
 
         jButton2.setText("Sort by Quantity");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-//        jButton3.setText("jButton3");
-//        jButton1.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jButton3ActionPerformed(evt);
-//            }
-//        });
-
         jButton4.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
         jButton5.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
@@ -148,15 +116,10 @@ public class Sort extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(157, 157, 157)
                         .addComponent(jButton2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(185, 185, 185)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                                .addComponent(jButton5)))))
+                        .addGap(171, 171, 171)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addComponent(jButton5)))
                 .addGap(48, 48, 48))
         );
         layout.setVerticalGroup(
@@ -165,85 +128,93 @@ public class Sort extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+ 
+    public void showRecord()
+    {
         try{
             String url="jdbc:mysql://localhost:3306/registration_details";
             String uname="root";
-            String password="webster";
-            con=DriverManager.getConnection(url,uname,password); 
-                    
-            String query="SELECT * FROM product ORDER BY Price ASC";
-             ps=con.prepareStatement(query);
-            rs=ps.executeQuery();
-            showUsersInJTable(query);
-            ArrayList<Product>usersList =new ArrayList<Product>();
-            while(rs.next()){
-                user=new Product(rs.getInt("id"),rs.getString("Product name"),rs.getString("Category"),rs.getInt("Price"),rs.getInt("Quantity"),rs.getInt("Mfg. Date"),rs.getInt("Expiry Date"));
-                usersList.add(user);
-            }
-            
-             }catch(Exception e)
+             String password="";
+            con=DriverManager.getConnection(url,uname,password);
+           String query="SELECT * FROM product WHERE user='"+user+"'";
+           ps=con.prepareStatement(query);
+           rs= ps.executeQuery(query);
+           jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch (Exception e)
         {
             JOptionPane.showMessageDialog(null,e);
         }
-            
-    }//GEN-LAST:event_jButton1ActionPerformed
-     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        try{
-            String url="jdbc:mysql://localhost:3306/registration_details";
-            String uname="root";
-            String password="webster";
-            con=DriverManager.getConnection(url,uname,password); 
-            String query="SELECT * FROM product ORDER BY Price ASC";
-            ps=con.prepareStatement(query);
-            rs=ps.executeQuery();
-            showUsersInJTable(query);
-            ArrayList<Product>usersList =new ArrayList<Product>();
-            while(rs.next()){
-                user=new Product(rs.getInt("id"),rs.getString("Product name"),rs.getString("Category"),rs.getInt("Price"),rs.getInt("Quantity"),rs.getInt("Mfg. Date"),rs.getInt("Expiry Date"));
-                usersList.add(user);
-            }
-            //return usersList;
-            
-         
-         
-            
-        }
-         catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null,e);
-        }
-            
-    }//GEN-LAST:event_jButton1ActionPerformed
-     
-   private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-      new Sort("").setVisible(true);
-    }//GEN-LAST:event_jButton2Actio
-
-   private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
     }
+  
+  
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try
+        {        String url="jdbc:mysql://localhost:3306/registration_details";
+            String uname="root";
+            String password="";
+            con=DriverManager.getConnection(url,uname,password);
+            
+            String query ="SELECT Id, Product, Price,Quantity, category, Mfg_Date,Expiry_Date, Threshold_quantity  FROM product";
+            ps = con.prepareStatement(query);
+            rs=ps.executeQuery(query + "ORDER by Quantity desc");
+            
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+            catch(Exception e)
+                    {
+                    JOptionPane.showMessageDialog(null,e);
+                    }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try
+        {        String url="jdbc:mysql://localhost:3306/registration_details";
+            String uname="root";
+            String password="";
+            con=DriverManager.getConnection(url,uname,password);
+            
+            String query ="SELECT Id, Product, Price,Quantity, category, Mfg_Date,Expiry_Date, Threshold_quantity  FROM product ";
+            ps = con.prepareStatement(query);
+            
+            rs=ps.executeQuery(query +"ORDER BY Price ASC");
+            
+                 jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+                 //update_table();
+        }
+            catch(Exception e)
+                    {
+                    JOptionPane.showMessageDialog(null,e);
+                    }
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new Details(user).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        showRecord();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,7 +253,6 @@ public class Sort extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -290,5 +260,3 @@ public class Sort extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
-
-
